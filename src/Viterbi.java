@@ -51,8 +51,8 @@ public class Viterbi {
 		
 		// lista usada para sortear os bits a serem trocados
 		ArrayList<Integer> listIDs = new ArrayList<Integer>();
-        for (int i = 0; i < bitsSaidaComRuido.size(); i++) listIDs.add(new Integer(i));
-        Collections.shuffle(listIDs);
+		for (int i = 0; i < bitsSaidaComRuido.size(); i++) listIDs.add(new Integer(i));
+		Collections.shuffle(listIDs);
 				
         // laço para realizar a troca dos bits sorteados;
 		for (int i = 0; i < qtdBitsRuido; i++) {
@@ -70,7 +70,7 @@ public class Viterbi {
 		System.out.println("Saida com Ruido: " + saidaComRuido);
 		/* FIM RUIDO */
 		
-		
+		viterbi(saidaComRuido);
 		
 		
 	}
@@ -78,6 +78,17 @@ public class Viterbi {
 	
 	
 	
+
+
+
+	private static void viterbi(String saidaComRuido) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
 
 
 
