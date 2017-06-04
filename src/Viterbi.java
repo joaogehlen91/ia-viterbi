@@ -14,10 +14,12 @@ public class Viterbi {
 		String estadoAtual = "00";
 		String saida = "";
 		
-		String entrada = "11010111011011";
-		Double ruido = 0.2; // nivel de ruido em porcentagem(0 - 1), exemplo: 0.75 = 75% de ruido
+		String entrada = "10111010001001000";
+		Double ruido = 0.05; // nivel de ruido em porcentagem(0 - 1), exemplo: 0.75 = 75% de ruido
 		
-		System.out.println("Est Atu |Ent |Emite |Prox Est");
+		System.out.println("Entrada:");
+		System.out.println(entrada);
+		//System.out.println("Est Atu |Ent |Emite |Prox Est");
 		
 		// codificacao
 		for (String ent : entrada.split("")) {
@@ -28,7 +30,7 @@ public class Viterbi {
 			estadoAtual = estado[i][j];
 			saida = saida + emitir[i][j];
 			logConsole += emitir[i][j] + "    |" + estadoAtual;
-			System.out.println(logConsole);
+			//System.out.println(logConsole);
 		}
 		
 		
@@ -39,7 +41,7 @@ public class Viterbi {
 		
 		
 		
-		System.out.println("\nSaida:           " + saida);
+		System.out.println("\nPares a serem enviados:\n" + saida);
 		
 		/* INICIO RUIDO */
 		// calcula a quantidade de bits que precisa ser trocado
@@ -66,26 +68,31 @@ public class Viterbi {
 		String saidaComRuido = "";
 		for (String bit : bitsSaidaComRuido) saidaComRuido = saidaComRuido + bit;
 		
-		System.out.println("Qtd trocado: " + qtdBitsRuido);
-		System.out.println("Saida com Ruido: " + saidaComRuido);
+		System.out.println("\nQtd de bits trocados:\n" + qtdBitsRuido);
+		System.out.println("\nSaida com Ruido:\n" + saidaComRuido);
 		/* FIM RUIDO */
 		
-		viterbi(saidaComRuido);
+		//viterbi(saidaComRuido);
+
+		ArrayList<String> bitsDecodificar = new ArrayList<String>();
+
+		for(int i=0; i<bitsSaidaComRuido.size(); i+=2){
+			bitsDecodificar.add(bitsSaidaComRuido.get(i)+bitsSaidaComRuido.get(i+1));
+		}
+		String[] stringArray = bitsDecodificar.toArray(new String[0]);
+		Arvore a = new Arvore(stringArray.length, stringArray);
+    	//a.imprimirArvore(a.raiz, 0, 0);
+    	String resultado = a.gerarSaida();
+    	System.out.println("\nResultado Viterbi:");
+    	System.out.println(resultado);
+
+
+    	System.out.println("\nA entrada e a saída deferem em:");
+    	System.out.println(a.calculaPeso(entrada, resultado));
+
 		
 		
 	}
-
-	
-	
-	
-
-
-
-	private static void viterbi(String saidaComRuido) {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 
 
