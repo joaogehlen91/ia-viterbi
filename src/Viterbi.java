@@ -14,7 +14,7 @@ public class Viterbi {
 		String estadoAtual = "00";
 		String saida = "";
 		
-		String entrada = "1001001001110001111100000111100001000100001111000100100000110100100111000";
+		String entrada = "1001001001110100011101001000100001011010011100001111100000111100001000100001111000100100000110100100111000";
 		entrada+="00";
 		Double ruido = 0.04; // nivel de ruido em porcentagem(0 - 1), exemplo: 0.75 = 75% de ruido
 		
@@ -79,6 +79,7 @@ public class Viterbi {
 		for(int i=0; i<bitsSaidaComRuido.size(); i+=2){
 			bitsDecodificar.add(bitsSaidaComRuido.get(i)+bitsSaidaComRuido.get(i+1));
 		}
+
 		String[] stringArray = bitsDecodificar.toArray(new String[0]);
 		Arvore a = new Arvore(stringArray.length, stringArray);
     	//a.imprimirArvore(a.raiz, 0, 0);
@@ -91,12 +92,7 @@ public class Viterbi {
     	System.out.println(a.calculaPeso(entrada, resultado));
 
 		
-		
 	}
-
-
-
-
 
 
 	private static ArrayList<String> converteStringtoArrayList(String texto) {
@@ -109,16 +105,10 @@ public class Viterbi {
 	}
 
 
-
-
-
-
-
 	private static String inverte(String string) {
 		if (string.equals("0")) return "1";
 		return "0";
 	}
-
 
 
 	private static int stringParaInt(String string) {
@@ -139,4 +129,6 @@ public class Viterbi {
 		}
 		return saida;
 	}
+
+	
 }

@@ -5,8 +5,9 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class Arvore {
+
 	public No raiz;
-	public int profundidade, maiorPesoPd, poda=10;
+	public int profundidade, poda=8;
 	public String[] bitsRecebidos;	
 	public ArrayList<No> folhas = new ArrayList<No>();
 	public ArrayList<No> pdzinha = new ArrayList<No>();
@@ -28,6 +29,8 @@ public class Arvore {
             put(new String("11"), new String[] {new String("01"), new String("11")});
         };
     };
+
+
 	public Arvore(int p, String[] entrada){
 		this.profundidade = p;
 		this.bitsRecebidos = entrada;
@@ -41,13 +44,13 @@ public class Arvore {
 		n.pesoDir = 0;
 		n.distRaiz = 0;
 		this.raiz = n;
-		maiorPesoPd = n.distRaiz;
 		pdzinha.add(n);
 		geraArvore(0);
-
 	}
 
+
 	public void geraArvore(int nivel){
+
 		if(nivel >= this.profundidade){
 			for(No n : pdzinha){
 				this.folhas.add(n);
@@ -56,7 +59,6 @@ public class Arvore {
 		} 
 
 		ArrayList<No> novapdzinha = new ArrayList<No>();
-
 		for(No n : this.pdzinha){
 			No noEsq = new No();
 			No noDir = new No();
@@ -94,13 +96,14 @@ public class Arvore {
 		for (int i=0; i<qtPoda; i++){
 			this.pdzinha.add(novapdzinha.get(i));
 		}
-		geraArvore(nivel+1);
 
+		geraArvore(nivel+1);
 	}
 
 
 	public int calculaPeso(String s1, String s2){
 		if(s1 == null) return 0;
+
 		int counter = 0, index = 0;
 		for(char c : s1.toCharArray()){
         	if (c != s2.charAt(index))
@@ -111,20 +114,23 @@ public class Arvore {
 		return counter;
 	}
 
+
 	public ArrayList<String> bitsDoMelhorCaminho() {
 		No noMenor = this.folhas.get(0);
 		for(No n : this.folhas){
 			if(n.distRaiz < noMenor.distRaiz)
 				noMenor = n;
 		}
+
 		ArrayList<String> paresBits = new ArrayList<String>();
 		while(noMenor.pai != null){
 			paresBits.add(String.valueOf(noMenor.bitQueLevou));
 			noMenor = noMenor.pai;
 		}
-		return paresBits;
 
+		return paresBits;
 	}
+
 
 	public String gerarSaida(){
 		ArrayList<String> paresDeBits = bitsDoMelhorCaminho();
@@ -132,13 +138,17 @@ public class Arvore {
 		for(int i=paresDeBits.size()-1; i>=0; i--){
 			resultado+=paresDeBits.get(i);
 		} 
+
 		return resultado;
 	}
+
 
 	public  void imprimirArvore(No raiz, int peso, int nivel){
 	    if(raiz==null)
 	         return;
+
 	    imprimirArvore(raiz.direita, raiz.pesoDir, nivel+1);
+
 	    if(nivel!=0){
 	        for(int i=0;i<nivel-1;i++)
 	            System.out.print("|\t");
@@ -146,7 +156,9 @@ public class Arvore {
 	    }
 	    else
 	        System.out.println(raiz.bitsParEmitido);
+
 	    imprimirArvore(raiz.esquerda, raiz.pesoEsq, nivel+1);
 	}  
+
 
 }
