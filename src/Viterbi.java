@@ -14,8 +14,8 @@ public class Viterbi {
 		String estadoAtual = "00";
 		String saida = "";
 		
-		String entrada = "10111010001001000";
-		Double ruido = 0.05; // nivel de ruido em porcentagem(0 - 1), exemplo: 0.75 = 75% de ruido
+		String entrada = "1001001001110001111100000111100001000100001111000100100000110100100111000";
+		Double ruido = 0.04; // nivel de ruido em porcentagem(0 - 1), exemplo: 0.75 = 75% de ruido
 		
 		System.out.println("Entrada:");
 		System.out.println(entrada);

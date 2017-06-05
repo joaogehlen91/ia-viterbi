@@ -1,13 +1,16 @@
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Arvore {
 	public No raiz;
-	public int profundidade;
+	public int profundidade, maiorPesoPd, poda=10;
 	public String[] bitsRecebidos;	
 	public ArrayList<No> folhas = new ArrayList<No>();
-	Map<String,String[]> parEmitido = new HashMap<String,String[]>()
+	public ArrayList<No> pdzinha = new ArrayList<No>();
+	public Map<String,String[]> parEmitido = new HashMap<String,String[]>()
 	{
         {
             put(new String("00"), new String[] {new String("00"), new String("11")});
@@ -16,7 +19,7 @@ public class Arvore {
             put(new String("11"), new String[] {new String("01"), new String("10")});
         };
     };
-	Map<String,String[]> proximoEstado = new HashMap<String,String[]>()
+	public Map<String,String[]> proximoEstado = new HashMap<String,String[]>()
 	{
         {
             put(new String("00"), new String[] {new String("00"), new String("10")});
@@ -38,32 +41,63 @@ public class Arvore {
 		n.pesoDir = 0;
 		n.distRaiz = 0;
 		this.raiz = n;
-		geraArvore(this.raiz, 0);
+		maiorPesoPd = n.distRaiz;
+		pdzinha.add(n);
+		geraArvore(0);
+
 	}
 
-	public void geraArvore(No n, int p){
-		if(p >= this.profundidade){
-			this.folhas.add(n);
+	public void geraArvore(int nivel){
+		if(nivel >= this.profundidade){
+			for(No n : pdzinha){
+				this.folhas.add(n);
+			}
 			return;
 		} 
-		No noEsq = new No();
-		No noDir = new No();
-		noEsq.pai = noDir.pai = n;
-		noEsq.bitQueLevou = 0;
-		noDir.bitQueLevou = 1;
-		noEsq.bitsParEmitido = this.parEmitido.get(n.estado)[noEsq.bitQueLevou];
-		noDir.bitsParEmitido = this.parEmitido.get(n.estado)[noDir.bitQueLevou];
-		noEsq.estado = this.proximoEstado.get(n.estado)[noEsq.bitQueLevou];
-		noDir.estado = this.proximoEstado.get(n.estado)[noDir.bitQueLevou];
-		n.pesoEsq = calculaPeso(this.bitsRecebidos[p], noEsq.bitsParEmitido);
-		n.pesoDir = calculaPeso(this.bitsRecebidos[p], noDir.bitsParEmitido);
-		noEsq.distRaiz = n.distRaiz + n.pesoEsq;
-		noDir.distRaiz = n.distRaiz + n.pesoDir;
-		n.esquerda = noEsq;
-		n.direita = noDir;
-		geraArvore(noEsq, p+1);
-		geraArvore(noDir, p+1);
+
+		ArrayList<No> novapdzinha = new ArrayList<No>();
+
+		for(No n : this.pdzinha){
+			No noEsq = new No();
+			No noDir = new No();
+			noEsq.pai = noDir.pai = n;
+			noEsq.bitQueLevou = 0;
+			noDir.bitQueLevou = 1;
+			noEsq.bitsParEmitido = this.parEmitido.get(n.estado)[noEsq.bitQueLevou];
+			noDir.bitsParEmitido = this.parEmitido.get(n.estado)[noDir.bitQueLevou];
+			noEsq.estado = this.proximoEstado.get(n.estado)[noEsq.bitQueLevou];
+			noDir.estado = this.proximoEstado.get(n.estado)[noDir.bitQueLevou];
+			n.pesoEsq = calculaPeso(this.bitsRecebidos[nivel], noEsq.bitsParEmitido);
+			n.pesoDir = calculaPeso(this.bitsRecebidos[nivel], noDir.bitsParEmitido);
+			noEsq.distRaiz = n.distRaiz + n.pesoEsq;
+			noDir.distRaiz = n.distRaiz + n.pesoDir;
+			n.esquerda = noEsq;
+			n.direita = noDir;
+			novapdzinha.add(noEsq);
+			novapdzinha.add(noDir);
+		}
+
+		Collections.sort(novapdzinha, new Comparator<No>() {
+	        @Override
+	        public int compare(No no1, No no2)
+	        {
+	        	return no1.distRaiz < no2.distRaiz ? -1 : no1.distRaiz > no2.distRaiz ? +1 : 0;
+	        }
+    	});
+
+		this.pdzinha = new ArrayList<No>();
+		int qtPoda = 0;
+		if (novapdzinha.size() < this.poda)
+			qtPoda = novapdzinha.size();
+		else
+			qtPoda = this.poda;
+		for (int i=0; i<qtPoda; i++){
+			this.pdzinha.add(novapdzinha.get(i));
+		}
+		geraArvore(nivel+1);
+
 	}
+
 
 	public int calculaPeso(String s1, String s2){
 		if(s1 == null) return 0;
