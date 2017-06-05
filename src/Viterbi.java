@@ -15,11 +15,11 @@ public class Viterbi {
 		String saida = "";
 		
 		String entrada = "1001001001110001111100000111100001000100001111000100100000110100100111000";
+		entrada+="00";
 		Double ruido = 0.04; // nivel de ruido em porcentagem(0 - 1), exemplo: 0.75 = 75% de ruido
 		
-		System.out.println("Entrada:");
+		System.out.println("Entrada + par de bits extra:");
 		System.out.println(entrada);
-		//System.out.println("Est Atu |Ent |Emite |Prox Est");
 		
 		// codificacao
 		for (String ent : entrada.split("")) {
