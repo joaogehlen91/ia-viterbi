@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 
 public class Viterbi {
@@ -14,9 +15,11 @@ public class Viterbi {
 		String estadoAtual = "00";
 		String saida = "";
 		
-		String entrada = "1001001001110100011101001000100001011010011100001111100000111100001000100001111000100100000110100100111000";
+		String entrada = stringBinariaRandomica(Integer.parseInt(args[0]));
 		entrada+="00";
-		Double ruido = 0.04; // nivel de ruido em porcentagem(0 - 1), exemplo: 0.75 = 75% de ruido
+		
+		// nivel de ruido em porcentagem(0 - 1), exemplo: 0.75 = 75% de ruido
+		Double ruido = 0.01*Double.parseDouble(args[1]); 
 		
 		System.out.println("Entrada + par de bits extra:");
 		System.out.println(entrada);
@@ -92,6 +95,16 @@ public class Viterbi {
     	System.out.println(a.calculaPeso(entrada, resultado));
 
 		
+	}
+
+
+	private	static String stringBinariaRandomica( int len ){
+		Random rnd = new Random();
+		String ab = "01";
+		StringBuilder sb = new StringBuilder( len );
+		for( int i = 0; i < len; i++ ) 
+			sb.append( ab.charAt( rnd.nextInt(ab.length()) ) );
+		return sb.toString();
 	}
 
 
