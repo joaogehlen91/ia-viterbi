@@ -1,3 +1,14 @@
+/*
+ * Nomes: Elias Fank, João Gehlen, Ricardo Zanuzzo
+ * Disciplina: Inteligencia Artificial
+ * 
+ * 2017/1
+ * 
+ * Esta classe eh usada para construir a arvore que sera usada na decodificacao
+ * 
+ */
+
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;

@@ -1,3 +1,13 @@
+/*
+ * Nomes: Elias Fank, João Gehlen, Ricardo Zanuzzo
+ * Disciplina: Inteligencia Artificial
+ * 
+ * 2017/1
+ * 
+ * Esta classe eh a classe principal do algoritmo de Viterbi.
+ * 
+ */
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -5,9 +15,6 @@ import java.util.Random;
 
 public class Viterbi {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		String emitir[][] = {{"00", "11"}, {"11", "00"}, {"10", "01"}, {"01", "10"}};
 		String estado[][] = {{"00", "10"}, {"00", "10"}, {"01", "11"}, {"01", "11"}};
@@ -35,12 +42,6 @@ public class Viterbi {
 			logConsole += emitir[i][j] + "    |" + estadoAtual;
 			//System.out.println(logConsole);
 		}
-		
-		
-		/* TODO 
-		 * Além disto são gerados 2 pares de bits extras no final para usar toda a influencia dos bits de entrada.
-		 * Nao lembro como que é esses dois bits, repete os dois ultimos? o ultimo duas vezes??
-		 * */
 		
 		
 		
@@ -75,7 +76,6 @@ public class Viterbi {
 		System.out.println("\nSaida com Ruido:\n" + saidaComRuido);
 		/* FIM RUIDO */
 		
-		//viterbi(saidaComRuido);
 
 		ArrayList<String> bitsDecodificar = new ArrayList<String>();
 
