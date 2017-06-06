@@ -23,13 +23,13 @@ public class Viterbi {
 		String saida = "";
 		
 		String entrada = stringBinariaRandomica(Integer.parseInt(args[0]));
+		System.out.println("Entrada:");
+		System.out.println(entrada);
+		
 		entrada+="00";
 		
 		// nivel de ruido em porcentagem(0 - 1), exemplo: 0.75 = 75% de ruido
 		Double ruido = 0.01*Double.parseDouble(args[1]); 
-		
-		System.out.println("Entrada + par de bits extra:");
-		System.out.println(entrada);
 		
 		// codificacao
 		for (String ent : entrada.split("")) {
@@ -88,11 +88,11 @@ public class Viterbi {
     	//a.imprimirArvore(a.raiz, 0, 0);
     	String resultado = a.gerarSaida();
     	System.out.println("\nResultado Viterbi:");
-    	System.out.println(resultado);
+    	System.out.println(resultado.substring(0, resultado.length()-2));
 
 
     	System.out.println("\nA entrada e a saída deferem em:");
-    	System.out.println(a.calculaPeso(entrada, resultado));
+    	System.out.println(a.calculaPeso(entrada.substring(0, entrada.length()-2), resultado.substring(0, resultado.length()-2)));
 
 		
 	}
