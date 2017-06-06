@@ -163,10 +163,10 @@ public class Arvore {
 	    if(nivel!=0){
 	        for(int i=0;i<nivel-1;i++)
 	            System.out.print("|\t");
-	            System.out.println("|---"+peso+"---"+raiz.bitsParEmitido);
+	            System.out.println("|---"+peso+"---"+raiz.estado);
 	    }
 	    else
-	        System.out.println(raiz.bitsParEmitido);
+	        System.out.println(raiz.estado);
 
 	    imprimirArvore(raiz.esquerda, raiz.pesoEsq, nivel+1);
 	}  
