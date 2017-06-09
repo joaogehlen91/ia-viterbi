@@ -56,7 +56,7 @@ public class Arvore {
 		n.distRaiz = 0;
 		this.raiz = n;
 		pdzinha.add(n);
-		geraArvore(0);		
+		geraArvore(0);
 	}
 
 
