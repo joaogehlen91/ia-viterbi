@@ -56,59 +56,67 @@ public class Arvore {
 		n.distRaiz = 0;
 		this.raiz = n;
 		pdzinha.add(n);
-		geraArvore(0);
+		geraArvore(0);		
 	}
 
 
 	public void geraArvore(int nivel){
 
-		if(nivel >= this.profundidade){
+		/*if(nivel >= this.profundidade){
 			for(No n : pdzinha){
 				this.folhas.add(n);
 			}
 			return;
-		} 
+		}*/ 
 
-		ArrayList<No> novapdzinha = new ArrayList<No>();
-		for(No n : this.pdzinha){
-			No noEsq = new No();
-			No noDir = new No();
-			noEsq.pai = noDir.pai = n;
-			noEsq.bitQueLevou = 0;
-			noDir.bitQueLevou = 1;
-			noEsq.bitsParEmitido = this.parEmitido.get(n.estado)[noEsq.bitQueLevou];
-			noDir.bitsParEmitido = this.parEmitido.get(n.estado)[noDir.bitQueLevou];
-			noEsq.estado = this.proximoEstado.get(n.estado)[noEsq.bitQueLevou];
-			noDir.estado = this.proximoEstado.get(n.estado)[noDir.bitQueLevou];
-			n.pesoEsq = calculaPeso(this.bitsRecebidos[nivel], noEsq.bitsParEmitido);
-			n.pesoDir = calculaPeso(this.bitsRecebidos[nivel], noDir.bitsParEmitido);
-			noEsq.distRaiz = n.distRaiz + n.pesoEsq;
-			noDir.distRaiz = n.distRaiz + n.pesoDir;
-			n.esquerda = noEsq;
-			n.direita = noDir;
-			novapdzinha.add(noEsq);
-			novapdzinha.add(noDir);
+		while(nivel < this.profundidade){
+			ArrayList<No> novapdzinha = new ArrayList<No>();
+			for(No n : this.pdzinha){
+				No noEsq = new No();
+				No noDir = new No();
+				noEsq.pai = noDir.pai = n;
+				noEsq.bitQueLevou = 0;
+				noDir.bitQueLevou = 1;
+				noEsq.bitsParEmitido = this.parEmitido.get(n.estado)[noEsq.bitQueLevou];
+				noDir.bitsParEmitido = this.parEmitido.get(n.estado)[noDir.bitQueLevou];
+				noEsq.estado = this.proximoEstado.get(n.estado)[noEsq.bitQueLevou];
+				noDir.estado = this.proximoEstado.get(n.estado)[noDir.bitQueLevou];
+				n.pesoEsq = calculaPeso(this.bitsRecebidos[nivel], noEsq.bitsParEmitido);
+				n.pesoDir = calculaPeso(this.bitsRecebidos[nivel], noDir.bitsParEmitido);
+				noEsq.distRaiz = n.distRaiz + n.pesoEsq;
+				noDir.distRaiz = n.distRaiz + n.pesoDir;
+				n.esquerda = noEsq;
+				n.direita = noDir;
+				novapdzinha.add(noEsq);
+				novapdzinha.add(noDir);
+			}
+	
+			Collections.sort(novapdzinha, new Comparator<No>() {
+		        @Override
+		        public int compare(No no1, No no2)
+		        {
+		        	return no1.distRaiz < no2.distRaiz ? -1 : no1.distRaiz > no2.distRaiz ? +1 : 0;
+		        }
+	    	});
+	
+			this.pdzinha = new ArrayList<No>();
+			int qtPoda = 0;
+			if (novapdzinha.size() < this.poda)
+				qtPoda = novapdzinha.size();
+			else
+				qtPoda = this.poda;
+			for (int i=0; i<qtPoda; i++){
+				this.pdzinha.add(novapdzinha.get(i));
+			}
+			
+			nivel++;
+			
 		}
-
-		Collections.sort(novapdzinha, new Comparator<No>() {
-	        @Override
-	        public int compare(No no1, No no2)
-	        {
-	        	return no1.distRaiz < no2.distRaiz ? -1 : no1.distRaiz > no2.distRaiz ? +1 : 0;
-	        }
-    	});
-
-		this.pdzinha = new ArrayList<No>();
-		int qtPoda = 0;
-		if (novapdzinha.size() < this.poda)
-			qtPoda = novapdzinha.size();
-		else
-			qtPoda = this.poda;
-		for (int i=0; i<qtPoda; i++){
-			this.pdzinha.add(novapdzinha.get(i));
-		}
-
-		geraArvore(nivel+1);
+		
+		for(No n : pdzinha)	this.folhas.add(n);
+		return;
+		
+		//geraArvore(nivel+1);
 	}
 
 
