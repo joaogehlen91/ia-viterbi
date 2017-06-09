@@ -62,13 +62,6 @@ public class Arvore {
 
 	public void geraArvore(int nivel){
 
-		/*if(nivel >= this.profundidade){
-			for(No n : pdzinha){
-				this.folhas.add(n);
-			}
-			return;
-		}*/ 
-
 		while(nivel < this.profundidade){
 			ArrayList<No> novapdzinha = new ArrayList<No>();
 			for(No n : this.pdzinha){
@@ -114,9 +107,8 @@ public class Arvore {
 		}
 		
 		for(No n : pdzinha)	this.folhas.add(n);
+			
 		return;
-		
-		//geraArvore(nivel+1);
 	}
 
 
